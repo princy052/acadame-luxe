@@ -2,20 +2,17 @@
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = trim($_POST['name'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
-    if (
-        isset($_SESSION['registered_email'], $_SESSION['registered_password']) &&
-        $email === $_SESSION['registered_email'] &&
-        $password === $_SESSION['registered_password']
-    ) {
-        $_SESSION['user_id'] = uniqid();
-        $_SESSION['user_name'] = $_SESSION['registered_email'];
-        header("Location: courses.php");
-        exit();
+    if (!$name || !$email || !$password) {
+        $error = "Please fill all fields";
     } else {
-        $error = "No account found. Register here";
+        $_SESSION['registered_email'] = $email;
+        $_SESSION['registered_password'] = $password;
+        header("Location: login.php");
+        exit();
     }
 }
 ?>
@@ -24,26 +21,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login | Academe Luxe</title>
+  <title>Register | Academe Luxe</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="login-wrapper">
     <div class="login-box">
-      <h2>LOGIN</h2>
+      <h2>Create Account</h2>
 
       <?php if (!empty($error)): ?>
         <div class="error"><?= htmlspecialchars($error) ?></div>
       <?php endif; ?>
 
       <form method="POST">
+        <input type="text" name="name" placeholder="Full Name" required>
         <input type="email" name="email" placeholder="Email Address" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Login</button>
+        <input type="password" name="password" placeholder="Create Password" required>
+        <button type="submit">Register</button>
       </form>
 
       <div class="register-link">
-        Don't have an account? <a href="register.php">Register</a>
+        Already have an account? <a href="login.php">Login here</a>
       </div>
     </div>
   </div>

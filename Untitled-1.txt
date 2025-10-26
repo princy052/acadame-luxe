@@ -1,0 +1,18 @@
+ Course Enrollment System
+
+A full-stack M-Commerce platform for enrolling in academic courses. Built with PHP, MySQL, HTML/CSS, and hosted on XAMPP.
+
+Features
+- User login authentication
+- Dynamic course catalog
+- Payment confirmation page
+- Attractive, responsive UI
+
+How to Run Locally
+1. Clone the repo: `git clone https://github.com/princy052/microproject.git`
+2. Place it in `htdocs` folder of XAMPP
+3. Import `academy.sql` into phpMyAdmin
+4. Visit `http://localhost/microproject`
+
+Author
+Princy Lin Mathew

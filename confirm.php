@@ -1,53 +1,50 @@
 <?php
-include 'db.php';
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
 
-$name = $_POST['name'];
-$email = $_POST['email'];
-$course = $_POST['course'];
-$payment = $_POST['payment'];
-$fee = $_POST['fee'];
-
-$sql = "INSERT INTO microprojectrequest (Name, Email, Course, Payment_Status) 
-        VALUES ('$name', '$email', '$course', '$payment')";
+$name = $_POST['name'] ?? 'example';
+$email = $_POST['email'] ?? 'example@gmail.com';
+$course = $_POST['course'] ?? 'Web Development';
+$fee = $_POST['fee'] ?? '999';
+$payment = $_POST['payment'] ?? 'GPay';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title><b>Enrollment Confirmed</b></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmation | Academe Luxe</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body style="background-color:lightblue";>
-  <header>
-    <h1><b>✅ Enrollment Successful</b></h1>
-    <p><i>Thank you for joining Academé Luxe</i></p>
-  </header>
+<body>
+  <div class="page-wrapper">
+    <header class="confirm-header">
+      <div class="checkmark">✔</div>
+      <h1>Enrollment Successful</h1>
+      <p class="tagline">Thank you for joining Academe Luxe</p>
+      <form action="logout.php" method="POST" class="logout-form">
+        <button type="submit" class="logout-btn">Logout</button>
+      </form>
+    </header>
 
-  <div class="container">
-    <?php
-    if ($conn->query($sql) === TRUE) {
-      echo "<div style='text-align:center; margin-bottom:30px;'>
-              <h2 style='color:#00bfa5;'>🎉 You're Enrolled!</h2>
-              <p>We've received your details and payment method.</p>
-            </div>
-            <div style='background:#f9f9f9; padding:20px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.05);'>
-              <p><strong>Name:</strong> $name</p>
-              <p><strong>Email:</strong> $email</p>
-              <p><strong>Course:</strong> $course</p>
-              <p><strong>Fee:</strong> ₹$fee</p>
-              <p><strong>Payment Method:</strong> $payment</p>
-            </div>";
-    } else {
-      echo "<h2>Oops! Something went wrong.</h2>";
-      echo "<p>Error: " . $conn->error . "</p>";
-    }
-    $conn->close();
-    ?>
+    <main class="confirm-container">
+      <div class="card confirm">
+        <h2>You're Enrolled!</h2>
+        <p>We've received your details and payment method.</p>
+        <div class="details">
+          <p><strong>Name:</strong> <?= htmlspecialchars($name) ?></p>
+          <p><strong>Email:</strong> <?= htmlspecialchars($email) ?></p>
+          <p><strong>Course:</strong> <?= htmlspecialchars($course) ?></p>
+          <p><strong>Fee:</strong> ₹<?= htmlspecialchars($fee) ?></p>
+          <p><strong>Payment Method:</strong> <?= htmlspecialchars($payment) ?></p>
+        </div>
+      </div>
+    </main>
+
+    <footer>© 2025 Academe Luxe | Confirmation Receipt</footer>
   </div>
-
-  <footer>
-    <p>© 2025 Princy's Academy | Confirmation Receipt</p>
-  </footer>
 </body>
 </html>

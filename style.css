@@ -1,164 +1,312 @@
-body {
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f4f7fa;
-  color: #333;
 }
 
+body, html {
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f4c81, #1e81b0, #abdbe3);
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Page wrapper for footer pinning */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ========================= */
+/* HEADER STYLING */
+/* ========================= */
 header {
-  background: linear-gradient(to right, #1e3c72, #2a5298);
-  color: white;
-  padding: 40px 20px;
+  background-color: #0f4c81;
+  color: #ffffff;
+  padding: 30px 20px;
   text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 header h1 {
-  font-size: 2.5em;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+header .tagline {
+  font-size: 15px;
+  color: #e0e0e0;
+}
+
+/* Confirmation Header Override */
+.confirm-header {
+  background-color: #0f4c81;
+  color: #ffffff;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.confirm-header .checkmark {
+  font-size: 36px;
+  font-weight: bold;
   margin-bottom: 10px;
 }
 
-header p {
-  font-size: 1.2em;
-  margin-top: 0;
+.confirm-header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 8px;
 }
 
-.catalog {
-  max-width: 1100px;
-  margin: 40px auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-  padding: 0 20px;
+.confirm-header .tagline {
+  font-size: 16px;
+  color: #e0e0e0;
 }
 
-.card {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
+/* ========================= */
+/* FOOTER STYLING */
+/* ========================= */
+footer {
+  background-color: #0f4c81;
+  color: #cccccc;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  margin-top: auto;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-}
-
-.card h3 {
-  color: #1e3c72;
-  margin-top: 0;
-}
-
-.card .fee {
-  font-weight: bold;
-  color: #00bfa5;
-}
-
-.card .btn {
-  margin-top: 15px;
-  padding: 12px 20px;
-  background: #1e3c72;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 1em;
-  cursor: pointer;
-}
-
-.card .btn:hover {
-  background: #16305c;
-}
-
-.container {
-  max-width: 600px;
-  margin: 60px auto;
-  background: white;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-}
-
-form label {
-  display: block;
-  margin-top: 20px;
-  font-weight: bold;
-}
-
-form input, form select {
+/* ========================= */
+/* LOGIN & REGISTER STYLING */
+/* ========================= */
+.login-wrapper {
   width: 100%;
-  padding: 12px;
-  margin-top: 8px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1em;
-}
-
-form button {
-  margin-top: 30px;
-  width: 100%;
-  padding: 14px;
-  background: #2a5298;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 1.1em;
-  cursor: pointer;
-}
-
-form button:hover {
-  background: #1e3c72;
-}
-
-.login-bg {
-  background: linear-gradient(to right, #1e3c72, #00bfa5);
+  padding: 20px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   height: 100vh;
 }
 
 .login-box {
-  background: white;
+  max-width: 400px;
+  margin: auto;
+  background-color: #ffffff;
   padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  width: 350px;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
   text-align: center;
 }
 
 .login-box h2 {
-  color: #1e3c72;
-  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #0f4c81;
+  margin-bottom: 30px;
+  text-transform: uppercase;
 }
 
 .login-box input {
   width: 100%;
-  padding: 12px;
-  margin: 10px 0;
+  padding: 14px 16px;
+  margin-bottom: 20px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #f4f7fa;
 }
 
 .login-box button {
   width: 100%;
-  padding: 12px;
-  background: #2a5298;
+  padding: 14px;
+  background-color: #0f4c81;
   color: white;
   border: none;
-  border-radius: 6px;
-  font-size: 1em;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .login-box button:hover {
-  background: #1e3c72;
+  background-color: #1e81b0;
 }
 
-footer {
-  background: #333;
-  color: white;
+.error {
+  color: #c0392b;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.register-link {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.register-link a {
+  color: #0f4c81;
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+/* ========================= */
+/* COURSES PAGE STYLING */
+/* ========================= */
+.courses-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  flex: 1;
   text-align: center;
+}
+
+.grid-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 12px;
   padding: 20px;
-  font-size: 0.9em;
-  margin-top: 40px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #0f4c81;
+}
+
+.card p {
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+.card .price {
+  font-weight: bold;
+  color: #27ae60;
+  margin-top: 10px;
+}
+
+.card form button {
+  margin-top: 12px;
+  width: 100%;
+  padding: 12px;
+  background-color: #0f4c81;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card form button:hover {
+  background-color: #1e81b0;
+}
+
+@media (max-width: 768px) {
+  .grid-2x2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================= */
+/* ENROLL PAGE STYLING */
+/* ========================= */
+.enroll-container {
+  max-width: 500px;
+  margin: 60px auto;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.enroll-container form label {
+  display: block;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #0f4c81;
+}
+
+.enroll-container form input,
+.enroll-container form select {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #f4f7fa;
+}
+
+.enroll-container form button {
+  width: 100%;
+  padding: 14px;
+  background-color: #0f4c81;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.enroll-container form button:hover {
+  background-color: #1e81b0;
+}
+
+/* ========================= */
+/* CONFIRMATION PAGE STYLING */
+/* ========================= */
+.confirm-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.card.confirm {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.card.confirm h2 {
+  font-size: 22px;
+  color: #0f4c81;
+  margin-bottom: 10px;
+}
+
+.card.confirm p {
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.details p {
+  font-size: 14px;
+  margin: 6px 0;
+  text-align: left;
 }
