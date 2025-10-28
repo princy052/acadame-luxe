@@ -1,56 +1,54 @@
 <?php
 session_start();
+require 'db.php';
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
+  header("Location: login.php");
+  exit;
 }
+$user_name = $_SESSION['user_name'];
+$courses = $conn->query("SELECT * FROM courses");
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Courses | Academe Luxe</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="page-wrapper">
-    <header>
-      <h1>AVAILABLE COURSES</h1>
-      <p class="tagline"><I>Choose your path to mastery</I></p>
-      <form action="logout.php" method="POST" class="logout-form">
-        <button type="submit" class="logout-btn">Logout</button>
-      </form>
-    </header>
+  <div class="header">
+    <div>Academe Luxe</div>
+    <div>Logged in as <strong><?= htmlspecialchars($user_name) ?></strong></div>
+    <a href="admin_login.php" class="admin-btn">Admin Login</a>
+  </div>
+  <div class="nav">
+    <a href="courses.php">Courses</a>
+    <a href="profile.php">Profile</a>
+    <a href="logout.php">Logout</a>
+  </div>
+  <div class="container">
+    <h2>Available Courses</h2>
+    <?php if ($courses->num_rows > 0): ?>
+      <?php while ($row = $courses->fetch_assoc()): ?>
+        <div class="enrollment">
+          <strong><?= htmlspecialchars($row['title']) ?></strong><br>
+          Duration: <?= htmlspecialchars($row['duration']) ?><br>
+          <?= htmlspecialchars($row['description']) ?><br>
+          Fee: ₹<?= htmlspecialchars($row['fee']) ?><br>
+          <form method="POST" action="enroll.php">
+  <input type="hidden" name="course" value="<?= htmlspecialchars($row['title']) ?>">
+  <input type="hidden" name="fee" value="<?= htmlspecialchars($row['fee']) ?>">
+  <input type="hidden" name="email" value="<?= $_SESSION['user_email'] ?? 'unknown@example.com' ?>">
+  <input type="hidden" name="phone" value="0000000000">
+  <button type="submit">Enroll</button>
+</form>
 
-    <main class="courses-container">
-      <div class="grid-2x2">
-        <?php
-        $courses = [
-          ["Web Development", "8 weeks", "Learn HTML, CSS, JavaScript, and PHP to build full-stack websites.", 999],
-          ["Data Structures", "6 weeks", "Master algorithms, recursion, and problem-solving techniques.", 799],
-          ["Cloud Computing", "10 weeks", "Explore AWS, manage cloud services, and learn DevOps techniques.", 1099],
-          ["Machine Learning", "12 weeks", "Explore supervised and unsupervised learning, build models with Python.", 1299]
-        ];
-
-        foreach ($courses as $course) {
-          echo '<div class="card">';
-          echo '<h3>' . $course[0] . '</h3>';
-          echo '<p>Duration: ' . $course[1] . '</p>';
-          echo '<p>' . $course[2] . '</p>';
-          echo '<p class="price">₹' . $course[3] . '</p>';
-          echo '<form action="enroll.php" method="POST">';
-          echo '<input type="hidden" name="course" value="' . $course[0] . '">';
-          echo '<input type="hidden" name="fee" value="' . $course[3] . '">';
-          echo '<button type="submit">Enroll Now</button>';
-          echo '</form>';
-          echo '</div>';
-        }
-        ?>
-      </div>
-    </main>
-
-    <footer>© 2025 Academe Luxe | Learn. Grow. Succeed.</footer>
+          
+        </div>
+      <?php endwhile; ?>
+    <?php else: ?>
+      <p>No courses available.</p>
+    <?php endif; ?>
   </div>
 </body>
 </html>

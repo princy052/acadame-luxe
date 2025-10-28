@@ -1,56 +1,67 @@
 <?php
 session_start();
+require 'db.php';
+
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
+  header("Location: login.php");
+  exit;
 }
 
-$course = $_POST['course'] ?? 'Web Development';
-$fee = $_POST['fee'] ?? '999';
+$course = $_POST['course'] ?? '';
+$fee = $_POST['fee'] ?? '';
+
+if (!$course || !$fee) {
+  echo "Invalid access.";
+  exit;
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Enroll | Academe Luxe</title>
+  <title>Enroll in <?= htmlspecialchars($course) ?> | Academe Luxe</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="page-wrapper">
-    <header>
-      <h1>Enroll in <?= htmlspecialchars($course) ?></h1>
-      <p class="tagline">Secure your spot and complete payment</p>
-      <form action="logout.php" method="POST" class="logout-form">
-        <button type="submit" class="logout-btn">Logout</button>
-      </form>
-    </header>
+  <div class="header">
+    <div>Academe Luxe</div>
+    <div>Logged in as <strong><?= htmlspecialchars($_SESSION['user_name']) ?></strong></div>
+    <a href="logout.php" class="admin-btn">Logout</a>
+  </div>
 
-    <main class="enroll-container">
-      <form action="confirm.php" method="POST">
-        <label for="name">Full Name</label>
-        <input type="text" name="name" id="name" required>
+  <div class="nav">
+    <a href="courses.php">Courses</a>
+    <a href="profile.php">Profile</a>
+    <a href="logout.php">Logout</a>
+  </div>
 
-        <label for="email">Email Address</label>
-        <input type="email" name="email" id="email" required>
+  <div class="container">
+    <h2>Enroll in <?= htmlspecialchars($course) ?></h2>
+    <p><strong>Fee:</strong> ₹<?= htmlspecialchars($fee) ?></p>
 
-        <label for="payment">Payment Method</label>
-        <select name="payment" id="payment" required>
-          <option value="">Select</option>
-          <option value="GPay">GPay</option>
-          <option value="PhonePe">PhonePe</option>
-          <option value="Paytm">Paytm</option>
-          <option value="Card">Credit/Debit Card</option>
-        </select>
+    <form method="POST" action="confirm.php">
+      <label>Full Name</label>
+      <input type="text" name="full_name" value="<?= htmlspecialchars($_SESSION['user_name'] ?? '') ?>" required>
 
-        <input type="hidden" name="course" value="<?= htmlspecialchars($course) ?>">
-        <input type="hidden" name="fee" value="<?= htmlspecialchars($fee) ?>">
+      <label>Email</label>
+      <input type="email" name="email" value="<?= htmlspecialchars($_SESSION['user_email'] ?? '') ?>" required>
 
-        <button type="submit">Confirm & Pay ₹<?= htmlspecialchars($fee) ?></button>
-      </form>
-    </main>
+      <label>Phone</label>
+      <input type="text" name="phone" required>
 
-    <footer>© 2025 Academe Luxe | Secure. Simple. Smart.</footer>
+      <label>Payment Method</label>
+      <select name="method" required>
+        <option value="">Select</option>
+        <option value="UPI">UPI</option>
+        <option value="Card">Debit/Credit Card</option>
+        <option value="NetBanking">Net Banking</option>
+      </select>
+
+      <input type="hidden" name="course" value="<?= htmlspecialchars($course) ?>">
+      <input type="hidden" name="fee" value="<?= htmlspecialchars($fee) ?>">
+
+      <button type="submit">Pay</button>
+    </form>
   </div>
 </body>
 </html>
