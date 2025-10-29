@@ -1,5 +1,6 @@
 <?php
 session_start();
+require 'db.php';
 
 $name = $_POST['full_name'] ?? '';
 $email = $_POST['email'] ?? '';
@@ -7,11 +8,17 @@ $phone = $_POST['phone'] ?? '';
 $method = $_POST['method'] ?? '';
 $course = $_POST['course'] ?? '';
 $fee = $_POST['fee'] ?? '';
+$user_id = $_SESSION['user_id'] ?? null;
 
-if (!$name || !$email || !$course || !$fee || !$method) {
+if (!$user_id || !$name || !$email || !$course || !$fee || !$method) {
   echo "Invalid access.";
   exit;
 }
+
+// ✅ Insert enrollment into database
+$stmt = $conn->prepare("INSERT INTO enrollment (user_id, course, fee, enrolled_at) VALUES (?, ?, ?, NOW())");
+$stmt->bind_param("isi", $user_id, $course, $fee);
+$stmt->execute();
 ?>
 
 <!DOCTYPE html>

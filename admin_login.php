@@ -26,6 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="header">
+    <div>Academe Luxe</div>
+    <div>Welcome to Admin Panel</div>
+  </div>
+
   <div class="container">
     <h2>Admin Login</h2>
     <?php if ($error): ?><div class="error"><?= htmlspecialchars($error) ?></div><?php endif; ?>

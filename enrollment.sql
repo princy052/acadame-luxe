@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2025 at 10:43 AM
+-- Generation Time: Oct 29, 2025 at 01:10 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,12 +30,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `enrollment` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
   `course` varchar(100) NOT NULL,
   `fee` int(11) NOT NULL,
-  `phone` varchar(100) NOT NULL,
-  `enrolled_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `enrolled_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -46,8 +43,7 @@ CREATE TABLE `enrollment` (
 -- Indexes for table `enrollment`
 --
 ALTER TABLE `enrollment`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -58,16 +54,6 @@ ALTER TABLE `enrollment`
 --
 ALTER TABLE `enrollment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `enrollment`
---
-ALTER TABLE `enrollment`
-  ADD CONSTRAINT `enrollment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

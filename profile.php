@@ -3,7 +3,7 @@ session_start();
 require 'db.php';
 
 if (!isset($_SESSION['user_id'])) {
-  header("Location: login.php");
+  echo "Session user_id not set.";
   exit;
 }
 
@@ -50,7 +50,7 @@ $result = $stmt->get_result();
         </div>
       <?php endwhile; ?>
     <?php else: ?>
-      <p>You have not enrolled in any courses yet.</p>
+      <p>No enrollments found for your account.</p>
     <?php endif; ?>
   </div>
 </body>
